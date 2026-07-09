@@ -44,8 +44,3 @@ Bash
 sh /config/trigger.sh "%L" "%F"
 同时在 qB 中新建分类 unRename，下载任务时务必选择该分类。
 
-贡献
-该流水线已完成核心闭环。欢迎提交 PR 改进正则匹配规则或适配更多媒体库！
-
-许可
-MIT License
