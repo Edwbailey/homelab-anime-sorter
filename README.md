@@ -1,4 +1,3 @@
-Markdown
 # Homelab Anime Sorter
 
 这是一个基于 Linux 原生环境的自动化动漫分拣与处理流水线。利用 Docker + Systemd + Python 实现全自动刮削、重命名与归档。
@@ -41,6 +40,7 @@ sudo chmod +x /opt/docker/qbittorrent/config/trigger.sh
 在 WebUI 设置 -> 下载 -> “下载完成后运行外部程序”中填入：
 
 Bash
-sh /config/trigger.sh "%L" "%F"
+sh /config/trigger.sh "%L" "%F" 
+
 同时在 qB 中新建分类 unRename，下载任务时务必选择该分类。
 
