@@ -8,7 +8,7 @@ from pathlib import Path
 import requests
 
 # ==================== 配置区 ====================
-TMDB_API_KEY = ""填写api
+TMDB_API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZDg2OGI3MDdhYjFiZWE2NDg4YTgxMmZjZjg1MmNkZCIsIm5iZiI6MTc4MzYyNjc1My4zMTEsInN1YiI6IjZhNGZmYzAxODU1ZTIyZjA2M2Q5ZGFlNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pj-GvRI3Sv7GKUbTOQh5JJmiU9r1hmlXH7b7VdJA4ts"
 LANGUAGE = "zh-CN"  # 强制拉取中文译名/简介
 DOWNLOAD_DIR = Path("/data/hdd/unRename")  # 你的下载目录
 TARGET_BASE = Path("/data/hdd/unDecode")  # 送去压制前的暂存目录
@@ -52,13 +52,14 @@ def parse_season_episode(filename):
     """从文件名解析季数和集数（深度适配 VCB/7ACG）"""
     if re.search(r'(?i)(NCOP|NCED|Menu|SP\d+|OVA)', filename):
         return None, None
-
-    # ====== 解析季数 (Season) ======
+# ====== 解析季数 (Season) ======
     season_patterns = [
         r'第([一二三四五六七八九十\d]+)季',
-        r'Season\s*(\d+)',
-        r'S(\d{1,2})',
-        r'\s([IVXLCDM]+)\s'
+        r'(?i)Season\s*(\d+)',
+        r'(?i)(\d+)\s*(?:nd|rd|th)?\s*Season', # 适配 "2nd Season" 这种写法
+        r'(?i)S(\d{1,2})',
+        r'\s([IVXLCDM]+)\s',
+        r'\s(0?[2-9])\s*(?=\[|-)'  # 🌟新增：针对 "Tawawa 2 [05]" 这种极简数字
     ]
     season_map = {'一':1,'二':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9,'十':10}
     
