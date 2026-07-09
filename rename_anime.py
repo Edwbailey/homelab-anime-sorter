@@ -8,7 +8,7 @@ from pathlib import Path
 import requests
 
 # ==================== 配置区 ====================
-TMDB_API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZDg2OGI3MDdhYjFiZWE2NDg4YTgxMmZjZjg1MmNkZCIsIm5iZiI6MTc4MzYyNjc1My4zMTEsInN1YiI6IjZhNGZmYzAxODU1ZTIyZjA2M2Q5ZGFlNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pj-GvRI3Sv7GKUbTOQh5JJmiU9r1hmlXH7b7VdJA4ts"
+TMDB_API_KEY = "" #填写tmdb api key
 LANGUAGE = "zh-CN"  # 强制拉取中文译名/简介
 DOWNLOAD_DIR = Path("/data/hdd/unRename")  # 你的下载目录
 TARGET_BASE = Path("/data/hdd/unDecode")  # 送去压制前的暂存目录
