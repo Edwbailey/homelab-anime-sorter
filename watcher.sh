@@ -22,7 +22,7 @@ tail -F "$TRIGGER_FILE" | while read filepath; do
         echo "转换物理路径: $real_path"
         
         # 执行 Python 脚本，并传入精准的文件路径
-        /usr/bin/python3 /home/bailey/rename_anime.py "$real_path"
+        /usr/bin/python3 /home/bailey/anime-auto-renamer/rename_anime.py "$real_path"
         
         echo "处理完毕等待下一次任务..."
     fi

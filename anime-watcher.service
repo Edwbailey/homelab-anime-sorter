@@ -1,0 +1,16 @@
+[Unit]
+Description=Anime Rename Watcher Service
+After=network.target
+
+[Service]
+Type=simple
+User=bailey
+# 工作目录设置在家目录
+WorkingDirectory=/home/bailey/anime-auto-renamer
+# 启动刚才写的监听脚本
+ExecStart=/home/bailey/anime-auto-renamer/watcher.sh
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
