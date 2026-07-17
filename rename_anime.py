@@ -10,14 +10,6 @@ from pathlib import Path
 import requests
 
 # ==================== 配置区 ====================
-<<<<<<< HEAD
-TMDB_API_KEY = "" #填写tmdb api key
-LANGUAGE = "zh-CN"  # 强制拉取中文译名/简介
-DOWNLOAD_DIR = Path("/data/hdd/unRename")  # 你的下载目录
-TARGET_BASE = Path("/data/hdd/unDecode")  # 送去压制前的暂存目录
-DRY_RUN = False  # 测试模式：True=只打印不修改，False=实际执行
-FILE_ACTION = "copy"  # 文件操作模式："move" 为直接移动，"copy" 为复制（如果不保留做种推荐 move）
-=======
 TMDB_API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZDg2OGI3MDdhYjFiZWE2NDg4YTgxMmZjZjg1MmNkZCIsIm5iZiI6MTc4MzYyNjc1My4zMTEsInN1YiI6IjZhNGZmYzAxODU1ZTIyZjA2M2Q5ZGFlNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pj-GvRI3Sv7GKUbTOQh5JJmiU9r1hmlXH7b7VdJA4ts"
 LANGUAGE = "zh-CN"
 DOWNLOAD_DIR = Path("/data/hdd/downloads/unRename")
@@ -29,7 +21,6 @@ ENCODE_LIST_PATH = Path("/data/nvme/encode_trigger.list")
 BITRATE_THRESHOLD_KBPS = 3000
 DRY_RUN = False
 FILE_ACTION = "move"
->>>>>>> 009e837 (优化特别篇识别逻辑)
 # ================================================
 
 def get_tmdb_session():
@@ -68,12 +59,14 @@ def parse_season_episode(file_path):
     filename = file_path.stem
     search_target = f"{file_path.parent.name} {filename}"
 
+    # 🌟 核心补丁 1：绝对的 SxxExx 霸权
     std_match = re.search(r'(?i)S(\d{1,2})E(\d{1,3})', filename) 
     if std_match:
         return int(std_match.group(1)), int(std_match.group(2))
 
     if re.search(r'(?i)(NCOP|NCED|Menu)', filename): return None, None
     
+    # 🌟 核心补丁 2：原生态 OVA 抓取
     sp_match = re.search(r'(?i)\b(?:SP|OVA|OAD)\s*(\d{1,2})?\b', filename)
     if sp_match:
         episode_num = int(sp_match.group(1)) if sp_match.group(1) else 1
@@ -157,7 +150,7 @@ def process_file_group(session, base_stem, files):
     for file_path in files:
         season, episode = parse_season_episode(file_path)
         
-        # 🌟 修复0陷阱：严谨判断 None，放行 0
+        # 🌟 修复陷阱：严谨判断 None，强力放行第 0 季！
         if season is None or episode is None:
             print(f"  ⏭️ {file_path.name}: 无法解析常规季/集信息，跳过")
             continue
